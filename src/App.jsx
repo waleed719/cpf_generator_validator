@@ -87,13 +87,15 @@ const CPFValidatorGenerator = () => {
 
   // --- HISTORY ROUTING LOGIC (Using native History API for clean URLs) ---
   const getCurrentPath = useCallback(() => {
-    // Gets path like '/gerador' or '/'
+    // Gets path like '/gerador-cpf' or '/'
     return window.location.pathname.toLowerCase() || '/';
   }, []);
 
   const [currentCleanPath, setCurrentCleanPath] = useState(getCurrentPath());
 
   const navigate = useCallback((path) => {
+    // If the path is just a placeholder (like '/en' for language switch), avoid pushState in a real app
+    // For this context, we'll navigate directly.
     window.history.pushState(null, '', path);
     setCurrentCleanPath(path);
     window.scrollTo(0, 0); // Scroll to top on navigation
@@ -128,13 +130,13 @@ const CPFValidatorGenerator = () => {
     const pathSegment = path.split('/').filter(Boolean)[0];
     
     if (path === '/') return 'home';
-    if (pathSegment === 'gerador') return 'generator';
-    if (pathSegment === 'validador') return 'validator';
-    if (pathSegment === 'lote') return 'batch';
-    if (pathSegment === 'sobre') return 'about';
+    if (pathSegment === 'gerador-cpf') return 'generator';
+    if (pathSegment === 'validar-cpf') return 'validator';
+    if (pathSegment === 'lote-cpf') return 'batch';
+    if (pathSegment === 'sobre-cpf-tools') return 'about';
     if (pathSegment === 'contato') return 'contact';
-    if (pathSegment === 'privacidade') return 'privacy';
-    if (pathSegment === 'termos') return 'terms';
+    if (pathSegment === 'politica-privacidade') return 'privacy';
+    if (pathSegment === 'termos-de-uso') return 'terms';
     if (pathSegment === 'aviso-legal') return 'legal';
     return 'home';
   };
@@ -146,10 +148,10 @@ const CPFValidatorGenerator = () => {
   const translations = {
     pt: {
       home: 'Início',
-      generator: 'Gerador',
-      validator: 'Validador',
-      batchTools: 'Ferramentas em Lote',
-      about: 'Sobre',
+      generator: 'Gerador de CPF',
+      validator: 'Validar CPF',
+      batchTools: 'Lote CPF',
+      about: 'Sobre CPF Tools',
       contact: 'Contato',
       privacy: 'Política de Privacidade', 
       terms: 'Termos de Uso', 
@@ -163,16 +165,16 @@ const CPFValidatorGenerator = () => {
       learnMore: 'Saiba Mais',
       
       generatorTitle: 'Gerador de CPF Válido | CPF Gerador para Testes',
-      generatorMetaDesc: 'Use nosso **gerador de CPF** para criar números **CPF válido** para testes. Escolha a região brasileira, formato e gere múltiplos CPFs para desenvolvimento de sistemas. Ferramenta online e gratuita.',
+      generatorMetaDesc: 'Use nosso **gerador de cpf** para criar números **CPF válido** para testes. Escolha a região brasileira, formato e gere múltiplos CPFs para desenvolvimento de sistemas. Ferramenta online e gratuita.',
       generatorIntro: 'Nosso **Gerador de CPF Válido** utiliza o algoritmo oficial brasileiro para criar números de CPF matematicamente válidos. Ideal para desenvolvedores que precisam testar sistemas, formulários e validações. Gere seu **cpf gerador** agora!',
       whyUseGenerator: 'Por que usar nosso Gerador de CPF?',
 
       validatorTitle: 'Validador de CPF Online | Verificar se o CPF é Válido',
-      validatorMetaDesc: 'Use nosso **validador de CPF** online e gratuito para verificar se o **CPF é válido** instantaneamente. Ferramenta rápida, segura e baseada no algoritmo oficial da Receita Federal.',
+      validatorMetaDesc: 'Use nosso **validador de cpf** online e gratuito para verificar se o **CPF é válido** instantaneamente. Ferramenta rápida, segura e baseada no algoritmo oficial da Receita Federal.',
       validatorIntro: 'Verifique se um número de **CPF é válido** usando o algoritmo matemático oficial. Nossa ferramenta analisa os dígitos verificadores e confirma a integridade do número instantaneamente.',
       whyUseValidator: 'Por que usar nosso Validador de CPF?',
       
-      batchToolsTitle: 'Ferramentas em Lote (Gerador e Validador de CPF em Massa)',
+      batchToolsTitle: 'Lote CPF (Gerador e Validador de CPF em Massa)',
       batchToolsMetaDesc: 'Processe milhares de CPFs de uma vez. Gere ou valide em lote com exportação em CSV/JSON. Perfeito para desenvolvedores e analistas de dados.',
       // --- END SEO OPTIMIZED CONTENT PT ---
 
@@ -275,10 +277,10 @@ const CPFValidatorGenerator = () => {
     },
     en: {
       home: 'Home',
-      generator: 'Generator',
-      validator: 'Validator',
-      batchTools: 'Batch Tools',
-      about: 'About',
+      generator: 'CPF Generator',
+      validator: 'Validate CPF',
+      batchTools: 'Batch CPF',
+      about: 'About CPF Tools',
       contact: 'Contact',
       privacy: 'Privacy Policy', // New
       terms: 'Terms of Use', // New
@@ -469,7 +471,23 @@ const CPFValidatorGenerator = () => {
 
   // --- SEO Meta Tags Logic (Using History API Path) ---
   const getPageMeta = () => {
-    const path = currentCleanPath.split('/')[1] || 'home'; // 'gerador', 'validador', 'privacy', etc.
+    // We use the full path for accurate lookup
+    const path = currentCleanPath;
+    
+    // Map paths to keywords
+    let pageKey;
+    if (path === '/') pageKey = 'home';
+    else if (path.startsWith('/gerador-cpf')) pageKey = 'gerador-cpf';
+    else if (path.startsWith('/validar-cpf')) pageKey = 'validar-cpf';
+    else if (path.startsWith('/lote-cpf')) pageKey = 'lote-cpf';
+    else if (path.startsWith('/sobre-cpf-tools')) pageKey = 'sobre-cpf-tools';
+    else if (path.startsWith('/contato')) pageKey = 'contato';
+    else if (path.startsWith('/politica-privacidade')) pageKey = 'privacidade';
+    else if (path.startsWith('/termos-de-uso')) pageKey = 'termos';
+    else if (path.startsWith('/aviso-legal')) pageKey = 'aviso-legal';
+    else pageKey = 'home';
+
+
     const meta = {
       home: {
         // Optimized for: gerador de cpf, gerador cpf
@@ -477,24 +495,24 @@ const CPFValidatorGenerator = () => {
         description: t.heroDescription,
         keywords: language === 'pt' ? 'gerador de cpf, gerador cpf, cpf gerador, cpf válido, validar cpf online, gerar cpf válido' : 'cpf validator, cpf generator, valid cpf, validate cpf online, generate valid cpf'
       },
-      gerador: {
+      'gerador-cpf': {
         // Optimized for: gerador cpf valido, gerador de cpf valido, cpf gerador valido, cpf valido gerador
         title: t.generatorTitle,
         description: t.generatorMetaDesc,
         keywords: language === 'pt' ? 'gerador cpf valido, gerador de cpf valido, cpf gerador valido, cpf valido gerador, cpf para teste, cpf fictício' : 'cpf generator, generate valid cpf, test cpf, fictitious cpf'
       },
-      validador: {
+      'validar-cpf': {
         // Optimized for: validador cpf, verificar se cpf é válido
         title: t.validatorTitle,
         description: t.validatorMetaDesc,
         keywords: language === 'pt' ? 'validador cpf, validar cpf, verificar cpf, cpf válido, verificar se o cpf é válido' : 'cpf validator, validate cpf, verify cpf, valid cpf'
       },
-      lote: {
+      'lote-cpf': {
         title: t.batchToolsTitle,
         description: t.batchToolsMetaDesc,
-        keywords: language === 'pt' ? 'validação em lote, geração em lote cpf, processar cpfs' : 'batch validation, batch cpf generation, process cpfs'
+        keywords: language === 'pt' ? 'validação em lote, geração em lote cpf, processar cpfs, gerador cpf em massa' : 'batch validation, batch cpf generation, process cpfs'
       },
-      sobre: {
+      'sobre-cpf-tools': {
         title: t.aboutTitle,
         description: t.aboutMetaDesc,
         keywords: language === 'pt' ? 'sobre validador cpf, algoritmo cpf, como funciona cpf' : 'about cpf validator, cpf algorithm, how cpf works'
@@ -520,21 +538,22 @@ const CPFValidatorGenerator = () => {
         keywords: language === 'pt' ? 'aviso legal, disclaimer, cpf fictício' : 'legal notice, disclaimer, fictitious cpf'
       }
     };
-    return meta[path] || meta.home;
+    return meta[pageKey] || meta.home;
   };
 
   const pageMeta = getPageMeta();
-  // Using currentCleanPath for canonical URL, assuming domain is geradorcpf.site
+  // Using currentCleanPath for canonical URL, assuming domain is geradorcpf.site (or the vercel URL for testing)
+  // Note: For production, replace geradorcpf.site with your actual domain.
   const canonicalUrl = `https://geradorcpf.site${currentCleanPath}`;
 
   // --- NAVIGATION (Refactored to use History API) ---
   const Navigation = () => {
     const navItems = [
       { id: 'home', icon: Home, label: t.home, path: '/' },
-      { id: 'generator', icon: Zap, label: t.generator, path: '/gerador' },
-      { id: 'validator', icon: Shield, label: t.validator, path: '/validador' },
-      { id: 'batch', icon: Users, label: t.batchTools, path: '/lote' },
-      { id: 'about', icon: BookOpen, label: t.about, path: '/sobre' },
+      { id: 'generator', icon: Zap, label: t.generator, path: '/gerador-cpf' },
+      { id: 'validator', icon: Shield, label: t.validator, path: '/validar-cpf' },
+      { id: 'batch', icon: Users, label: t.batchTools, path: '/lote-cpf' },
+      { id: 'about', icon: BookOpen, label: t.about, path: '/sobre-cpf-tools' },
       { id: 'contact', icon: Mail, label: t.contact, path: '/contato' }
     ];
 
@@ -640,16 +659,16 @@ const CPFValidatorGenerator = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="/gerador" // Updated to clean URL
-                onClick={(e) => { e.preventDefault(); navigate('/gerador'); }}
+                href="/gerador-cpf" // Updated to clean URL
+                onClick={(e) => { e.preventDefault(); navigate('/gerador-cpf'); }}
                 className="px-6 sm:px-8 py-3 sm:py-4 bg-white text-blue-600 rounded-lg font-bold text-base sm:text-lg hover:bg-blue-50 transition shadow-lg flex items-center justify-center gap-2"
               >
                 {t.getStarted}
                 <ChevronRight size={20} />
               </a>
               <a
-                href="/sobre" // Updated to clean URL
-                onClick={(e) => { e.preventDefault(); navigate('/sobre'); }}
+                href="/sobre-cpf-tools" // Updated to clean URL
+                onClick={(e) => { e.preventDefault(); navigate('/sobre-cpf-tools'); }}
                 className="px-6 sm:px-8 py-3 sm:py-4 bg-transparent border-2 border-white text-white rounded-lg font-bold text-base sm:text-lg hover:bg-white hover:text-blue-600 transition"
               >
                 {t.learnMore}
@@ -754,7 +773,7 @@ const CPFValidatorGenerator = () => {
               <div key={idx} className="bg-white rounded-xl shadow-lg p-6 sm:p-8 border border-gray-100 hover:border-blue-200 transition">
                 <useCase.icon className="text-blue-600 mb-3 sm:mb-4" size={window.innerWidth < 640 ? 32 : 40} />
                 <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">{useCase.title}</h3>
-                <p className="text-sm sm:text-base text-gray-600 leading-relaxed">{useCase.desc}</p>
+                <p className="text-sm sm:text-base text-gray-700 leading-relaxed">{useCase.desc}</p>
               </div>
             ))}
           </div>
@@ -773,15 +792,15 @@ const CPFValidatorGenerator = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="/gerador" // Updated to clean URL
-              onClick={(e) => { e.preventDefault(); navigate('/gerador'); }}
+              href="/gerador-cpf" // Updated to clean URL
+              onClick={(e) => { e.preventDefault(); navigate('/gerador-cpf'); }}
               className="px-6 sm:px-8 py-3 sm:py-4 bg-white text-blue-600 rounded-lg font-bold text-base sm:text-lg hover:bg-blue-50 transition shadow-lg"
             >
               {t.generateCPF}
             </a>
             <a
-              href="/validador" // Updated to clean URL
-              onClick={(e) => { e.preventDefault(); navigate('/validador'); }}
+              href="/validar-cpf" // Updated to clean URL
+              onClick={(e) => { e.preventDefault(); navigate('/validar-cpf'); }}
               className="px-6 sm:px-8 py-3 sm:py-4 bg-transparent border-2 border-white text-white rounded-lg font-bold text-base sm:text-lg hover:bg-white hover:text-blue-600 transition"
             >
               {t.validateCPF}
@@ -1137,7 +1156,7 @@ const CPFValidatorGenerator = () => {
             }`}
           >
             <Zap size={16} className="inline mr-2" />
-            {t.batchGenTitle}
+            {t.generator}
           </button>
           <button
             onClick={() => setBatchSubPage('validator')}
@@ -1148,7 +1167,7 @@ const CPFValidatorGenerator = () => {
             }`}
           >
             <Shield size={16} className="inline mr-2" />
-            {t.batchValTitle}
+            {t.validator}
           </button>
         </div>
 
@@ -1317,128 +1336,137 @@ const CPFValidatorGenerator = () => {
   // --- Main Content Renderer ---
   const renderContent = () => {
     // Note: The paths here match the clean URLs being pushed/read from the History API
-    if (currentCleanPath.startsWith('/gerador')) return <GeneratorPage />;
-    if (currentCleanPath.startsWith('/validador')) return <ValidatorPage />;
-    if (currentCleanPath.startsWith('/lote')) return <BatchToolsPage />;
-    if (currentCleanPath.startsWith('/sobre')) return <AboutPage />;
+    if (currentCleanPath.startsWith('/gerador-cpf')) return <GeneratorPage />;
+    if (currentCleanPath.startsWith('/validar-cpf')) return <ValidatorPage />;
+    if (currentCleanPath.startsWith('/lote-cpf')) return <BatchToolsPage />;
+    if (currentCleanPath.startsWith('/sobre-cpf-tools')) return <AboutPage />;
     if (currentCleanPath.startsWith('/contato')) return <ContactPage />;
-    if (currentCleanPath.startsWith('/privacidade')) return <PrivacyPage />;
-    if (currentCleanPath.startsWith('/termos')) return <TermsPage />;
+    if (currentCleanPath.startsWith('/politica-privacidade')) return <PrivacyPage />;
+    if (currentCleanPath.startsWith('/termos-de-uso')) return <TermsPage />;
     if (currentCleanPath.startsWith('/aviso-legal')) return <LegalNoticePage />;
     return <HomePage />;
   };
   
   // --- FOOTER (Refactored to remove Tech and add Legal pages) ---
-  const Footer = () => (
-    <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white mt-12 sm:mt-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-6 sm:mb-8">
-          <div>
-            <div className="flex items-center gap-2 mb-4">
-              <Shield size={28} className="text-blue-400" />
-              <span className="text-lg sm:text-xl font-bold">CPF Tools</span>
+  const Footer = () => {
+    // Function to navigate and close mobile menu if necessary (only used in mobile nav, but good practice)
+    const handleFooterNav = (path, e) => {
+      e.preventDefault();
+      navigate(path);
+      setMobileMenuOpen(false); // In case this is ever triggered by a mobile element
+    };
+
+    return (
+      <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white mt-12 sm:mt-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-6 sm:mb-8">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <Shield size={28} className="text-blue-400" />
+                <span className="text-lg sm:text-xl font-bold">CPF Tools</span>
+              </div>
+              <p className="text-sm sm:text-base text-gray-400 leading-relaxed">
+                {t.footerAboutText}
+              </p>
             </div>
-            <p className="text-sm sm:text-base text-gray-400 leading-relaxed">
-              {t.footerAboutText}
-            </p>
-          </div>
 
-          <div>
-            <h3 className="font-bold text-base sm:text-lg mb-4">{t.footerTools}</h3>
-            <ul className="space-y-2">
-              {[
-                { label: t.generator, path: '/gerador' },
-                { label: t.validator, path: '/validador' },
-                { label: t.batchTools, path: '/lote' }
-              ].map((item, idx) => (
-                <li key={idx}>
-                  <a
-                    href={item.path}
-                    onClick={(e) => { e.preventDefault(); navigate(item.path); }}
-                    className="text-sm sm:text-base text-gray-400 hover:text-white transition"
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="font-bold text-base sm:text-lg mb-4">{t.footerResources}</h3>
-            <ul className="space-y-2">
-              {[
-                { label: t.about, path: '/sobre' },
-                { label: t.contact, path: '/contato' },
-                { label: t.documentation, path: '' }, // Placeholder - static
-                { label: t.faq, path: '' } // Placeholder - static
-              ].map((item, idx) => (
-                <li key={idx}>
-                  {item.path ? (
+            <div>
+              <h3 className="font-bold text-base sm:text-lg mb-4">{t.footerTools}</h3>
+              <ul className="space-y-2">
+                {[
+                  { label: t.generator, path: '/gerador-cpf' },
+                  { label: t.validator, path: '/validar-cpf' },
+                  { label: t.batchTools, path: '/lote-cpf' }
+                ].map((item, idx) => (
+                  <li key={idx}>
                     <a
                       href={item.path}
-                      onClick={(e) => { e.preventDefault(); navigate(item.path); }}
+                      onClick={(e) => handleFooterNav(item.path, e)}
                       className="text-sm sm:text-base text-gray-400 hover:text-white transition"
                     >
                       {item.label}
                     </a>
-                  ) : (
-                    <span className="text-sm sm:text-base text-gray-400">{item.label}</span>
-                  )}
-                </li>
-              ))}
-            </ul>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="font-bold text-base sm:text-lg mb-4">{t.footerResources}</h3>
+              <ul className="space-y-2">
+                {[
+                  { label: t.about, path: '/sobre-cpf-tools' },
+                  { label: t.contact, path: '/contato' },
+                  { label: t.documentation, path: '' }, // Placeholder - static
+                  { label: t.faq, path: '' } // Placeholder - static
+                ].map((item, idx) => (
+                  <li key={idx}>
+                    {item.path ? (
+                      <a
+                        href={item.path}
+                        onClick={(e) => handleFooterNav(item.path, e)}
+                        className="text-sm sm:text-base text-gray-400 hover:text-white transition"
+                      >
+                        {item.label}
+                      </a>
+                    ) : (
+                      <span className="text-sm sm:text-base text-gray-400">{item.label}</span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* NEW LEGAL LINKS SECTION */}
+            <div>
+              <h3 className="font-bold text-base sm:text-lg mb-4">
+                {language === 'pt' ? 'Informações Legais' : 'Legal Information'}
+              </h3>
+              <ul className="space-y-2">
+                {[
+                  { label: t.privacy, path: '/politica-privacidade' },
+                  { label: t.terms, path: '/termos-de-uso' },
+                  { label: t.legal, path: '/aviso-legal' }
+                ].map((item, idx) => (
+                  <li key={idx}>
+                    <a
+                      href={item.path}
+                      onClick={(e) => handleFooterNav(item.path, e)}
+                      className="text-sm sm:text-base text-gray-400 hover:text-white transition"
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            {/* END NEW LEGAL LINKS SECTION */}
+
           </div>
 
-          {/* NEW LEGAL LINKS SECTION */}
-          <div>
-            <h3 className="font-bold text-base sm:text-lg mb-4">
-              {language === 'pt' ? 'Informações Legais' : 'Legal Information'}
-            </h3>
-            <ul className="space-y-2">
-              {[
-                { label: t.privacy, path: '/privacidade' },
-                { label: t.terms, path: '/termos' },
-                { label: t.legal, path: '/aviso-legal' }
-              ].map((item, idx) => (
-                <li key={idx}>
-                  <a
-                    href={item.path}
-                    onClick={(e) => { e.preventDefault(); navigate(item.path); }}
-                    className="text-sm sm:text-base text-gray-400 hover:text-white transition"
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-          {/* END NEW LEGAL LINKS SECTION */}
-
-        </div>
-
-        <div className="border-t border-gray-700 pt-6 sm:pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
-            <p className="text-xs sm:text-sm text-gray-400">
-              © 2025 CPF Tools | {language === 'pt' ? 'Desenvolvido com' : 'Built with'} ❤️ {language === 'pt' ? 'no Brasil' : 'in Brazil'}
-            </p>
-            {/* The links at the bottom are now correctly pointing to the full pages for redundancy */}
-            <div className="flex gap-4 sm:gap-6 flex-wrap justify-center">
-              <a href="/privacidade" onClick={(e) => { e.preventDefault(); navigate('/privacidade'); }} className="text-xs sm:text-sm text-gray-400 hover:text-white transition">
-                {language === 'pt' ? 'Privacidade' : 'Privacy'}
-              </a>
-              <a href="/termos" onClick={(e) => { e.preventDefault(); navigate('/termos'); }} className="text-xs sm:text-sm text-gray-400 hover:text-white transition">
-                {language === 'pt' ? 'Termos' : 'Terms'}
-              </a>
-              <a href="/aviso-legal" onClick={(e) => { e.preventDefault(); navigate('/aviso-legal'); }} className="text-xs sm:text-sm text-gray-400 hover:text-white transition">
-                {t.disclaimer}
-              </a>
+          <div className="border-t border-gray-700 pt-6 sm:pt-8">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+              <p className="text-xs sm:text-sm text-gray-400">
+                © 2025 CPF Tools | {language === 'pt' ? 'Desenvolvido com' : 'Built with'} ❤️ {language === 'pt' ? 'no Brasil' : 'in Brazil'}
+              </p>
+              {/* The links at the bottom are now correctly pointing to the full pages for redundancy */}
+              <div className="flex gap-4 sm:gap-6 flex-wrap justify-center">
+                <a href="/politica-privacidade" onClick={(e) => handleFooterNav('/politica-privacidade', e)} className="text-xs sm:text-sm text-gray-400 hover:text-white transition">
+                  {language === 'pt' ? 'Privacidade' : 'Privacy'}
+                </a>
+                <a href="/termos-de-uso" onClick={(e) => handleFooterNav('/termos-de-uso', e)} className="text-xs sm:text-sm text-gray-400 hover:text-white transition">
+                  {language === 'pt' ? 'Termos' : 'Terms'}
+                </a>
+                <a href="/aviso-legal" onClick={(e) => handleFooterNav('/aviso-legal', e)} className="text-xs sm:text-sm text-gray-400 hover:text-white transition">
+                  {t.disclaimer}
+                </a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </footer>
-  );
+      </footer>
+    );
+  };
 
 
   return (
