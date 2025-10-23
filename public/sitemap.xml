@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <!-- Home Page -->
+  <url>
+    <loc>https://yourdomain.com/</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://yourdomain.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/?lang=en" />
+  </url>
+  
+  <!-- Generator Page -->
+  <url>
+    <loc>https://yourdomain.com/generator</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://yourdomain.com/generator" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/generator?lang=en" />
+  </url>
+  
+  <!-- Validator Page -->
+  <url>
+    <loc>https://yourdomain.com/validator</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://yourdomain.com/validator" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://yourdomain.com/validator?lang=en" />
+  </url>
+  
+  <!-- Batch Tools Page -->
+  <url>
+    <loc>https://yourdomain.com/batch</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- About Page -->
+  <url>
+    <loc>https://yourdomain.com/about</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Contact Page -->
+  <url>
+    <loc>https://yourdomain.com/contact</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+</urlset>
