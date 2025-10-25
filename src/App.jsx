@@ -3,9 +3,6 @@ import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Analytics } from "@vercel/analytics/react";
 import { Copy, Check, Download, RefreshCw, Shield, Zap, Globe, Home, Calculator, FileCheck, Users, BookOpen, Mail, Menu, X, ChevronRight, Star, TrendingUp, Award, Clock } from 'lucide-react';
 
-
-
-
 // --- CPF Logic and Utility Functions (Unchanged) ---
 const formatCPF = (cpf) => {
   cpf = cpf.replace(/[^\d]/g, '');
@@ -99,8 +96,6 @@ const CPFValidatorGenerator = () => {
   const [currentCleanPath, setCurrentCleanPath] = useState(getCurrentPath());
 
   const navigate = useCallback((path) => {
-    // If the path is just a placeholder (like '/en' for language switch), avoid pushState in a real app
-    // For this context, we'll navigate directly.
     window.history.pushState(null, '', path);
     setCurrentCleanPath(path);
     window.scrollTo(0, 0); // Scroll to top on navigation
@@ -116,12 +111,10 @@ const CPFValidatorGenerator = () => {
     
     // Initial load check
     if (window.location.hash) {
-      // If the user loads an old hash URL (e.g., /#/gerador), transition them to the clean URL and remove the hash
       const cleanPath = window.location.hash.substring(1).toLowerCase() || '/';
       window.history.replaceState(null, '', cleanPath);
       setCurrentCleanPath(cleanPath);
     } else {
-      // Ensure current state is accurately reflected on load if no hash was present
       setCurrentCleanPath(getCurrentPath());
     }
 
@@ -149,6 +142,16 @@ const CPFValidatorGenerator = () => {
   const currentPageId = getPageIdFromPath(currentCleanPath);
   // --- END HISTORY ROUTING LOGIC ---
 
+  // Utility function to convert **markdown** to <strong>html</strong>
+  const convertMarkdownToHtml = (text) => {
+    if (!text) return '';
+    // Replace **bold** with <strong>bold</strong>
+    // Handle the case of internal links separately in the component if needed, 
+    // but for simple translations, this is cleaner.
+    let htmlText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    return { __html: htmlText };
+  };
+
 
   const translations = {
     pt: {
@@ -162,21 +165,34 @@ const CPFValidatorGenerator = () => {
       terms: 'Termos de Uso', 
       legal: 'Aviso Legal', 
 
-      // --- SEO OPTIMIZED CONTENT PT ---
-      heroTitle: 'Gerador de CPF Válido e Validador de CPF Online',
-      heroSubtitle: 'A solução completa e gratuita para gerar CPFs válidos para testes e validar números existentes.',
-      heroDescription: 'Gere **CPFs válidos** para testes de desenvolvimento, valide números existentes instantaneamente e processe milhares de documentos em segundos. Ferramenta 100% gratuita, segura e confiável.',
+      // --- SEO OPTIMIZED CONTENT PT (MODIFIED FOR KEYWORDS) ---
+      // Target Keywords: gerador cpf valido, validar cpf online, gerar cpf válido, gratuito, 2025
+      heroTitle: 'Gerador de CPF Válido Online e Validador de CPF - Gratuito 2025',
+      heroSubtitle: 'A solução completa, **gratuita** e **online** para gerar CPFs válidos para testes e **validar CPF** existente.',
+      heroDescription: 'Gere **CPFs válidos** para testes de desenvolvimento, valide números existentes instantaneamente e processe milhares de documentos em segundos. Ferramenta 100% **gratuita**, segura e confiável.',
       getStarted: 'Começar Agora',
       learnMore: 'Saiba Mais',
       
-      generatorTitle: 'Gerador de CPF Válido | CPF Gerador para Testes',
-      generatorMetaDesc: 'Use nosso **gerador de cpf** para criar números **CPF válido** para testes. Escolha a região brasileira, formato e gere múltiplos CPFs para desenvolvimento de sistemas. Ferramenta online e gratuita.',
-      generatorIntro: 'Nosso **Gerador de CPF Válido** utiliza o algoritmo oficial brasileiro para criar números de CPF matematicamente válidos. Ideal para desenvolvedores que precisam testar sistemas, formulários e validações. Gere seu **cpf gerador** agora!',
+      // Target Keywords: gerador cpf valido, cpf gerador valido, cpf para teste
+      generatorTitle: 'Gerador de CPF Válido Online | CPF Gerador para Testes',
+      generatorMetaDesc: 'Use nosso **gerador de cpf online** para criar números **CPF válido** para testes. Escolha a região brasileira, formato e gere múltiplos CPFs para desenvolvimento de sistemas. Ferramenta **online e gratuita**.',
+      generatorIntro: 'Nosso **Gerador de CPF Válido Online** utiliza o algoritmo oficial brasileiro para criar números de **CPF válido** para testes, ideal para desenvolvedores que precisam testar sistemas, formulários e validações. Gere seu **cpf gerador** agora, de forma **gratuita**!',
+      // New SEO content for benefits
+      generatorBenefit1: 'Geração de **CPF Válido Online** para testes de sistema e automação.',
+      generatorBenefit2: 'Filtro por região para gerar CPFs específicos por estado.',
+      generatorBenefit3: 'Opções de formato (formatado e sem formatação).',
+      generatorBenefit4: 'Ferramenta 100% **gratuita**, segura e de uso ilimitado.',
       whyUseGenerator: 'Por que usar nosso Gerador de CPF?',
 
+      // Target Keywords: validador cpf, verificar se cpf é válido, validar cpf online
       validatorTitle: 'Validador de CPF Online | Verificar se o CPF é Válido',
-      validatorMetaDesc: 'Use nosso **validador de cpf** online e gratuito para verificar se o **CPF é válido** instantaneamente. Ferramenta rápida, segura e baseada no algoritmo oficial da Receita Federal.',
-      validatorIntro: 'Verifique se um número de **CPF é válido** usando o algoritmo matemático oficial. Nossa ferramenta analisa os dígitos verificadores e confirma a integridade do número instantaneamente.',
+      validatorMetaDesc: 'Use nosso **validador de cpf online** e **gratuito** para verificar se o **CPF é válido** instantaneamente. Ferramenta rápida, segura e baseada no algoritmo oficial da Receita Federal.',
+      validatorIntro: 'Verifique se um número de **CPF é válido** usando o algoritmo matemático oficial. Nossa ferramenta **Validador de CPF Online** analisa os dígitos verificadores e confirma a integridade do número instantaneamente, de forma **segura** e **gratuita**.',
+      // New SEO content for benefits
+      validatorBenefit1: '**Validador de CPF Online** com verificação do algoritmo oficial em tempo real.',
+      validatorBenefit2: 'Verificação instantânea da validade matemática do CPF.',
+      validatorBenefit3: 'Segurança: Processamento 100% local no seu navegador.',
+      validatorBenefit4: 'Ideal para checagem rápida de integridade de dados.',
       whyUseValidator: 'Por que usar nosso Validador de CPF?',
       
       batchToolsTitle: 'Lote CPF (Gerador e Validador de CPF em Massa)',
@@ -292,7 +308,7 @@ const CPFValidatorGenerator = () => {
       legal: 'Legal Notice', // New
       
       // ... (rest of existing translations)
-      heroTitle: 'Professional CPF Validator & Generator',
+      heroTitle: 'Professional CPF Validator & Generator - Free Online 2025', // Updated for EN too
       heroSubtitle: 'Complete solution for CPF validation and generation with certified mathematical algorithm',
       heroDescription: 'Generate valid CPFs for development testing, validate existing numbers instantly, and process thousands of documents in seconds. 100% free, secure, and reliable tool.',
       getStarted: 'Get Started',
@@ -337,6 +353,10 @@ const CPFValidatorGenerator = () => {
       generatorMetaDesc: 'Generate mathematically valid CPFs with our free online generator. Choose Brazilian region, format and generate multiple CPFs for development testing.',
       generatorIntro: 'Our CPF generator uses the official Brazilian algorithm to create mathematically valid CPF numbers. Ideal for developers who need to test systems, forms and validations.',
       whyUseGenerator: 'Why use our Generator?',
+      validatorBenefit1: 'Online CPF Validator with real-time official algorithm verification.',
+      validatorBenefit2: 'Instant verification of the mathematical validity of the CPF.',
+      validatorBenefit3: 'Security: 100% local processing in your browser.',
+      validatorBenefit4: 'Ideal for quick data integrity checking.',
       validateCPF: 'Validate CPF',
       validatorTitle: 'CPF Validator - Verify CPFs Instantly',
       validatorMetaDesc: 'Validate CPFs online for free with our validator that uses the official mathematical algorithm. Verify the authenticity of any CPF in milliseconds.',
@@ -495,52 +515,52 @@ const CPFValidatorGenerator = () => {
 
     const meta = {
       home: {
-        // Optimized for: gerador de cpf, gerador cpf
-        title: language === 'pt' ? 'Gerador de CPF Válido e Validador de CPF Online - Gratuito' : 'Professional CPF Validator & Generator - Free Online',
-        description: t.heroDescription,
-        keywords: language === 'pt' ? 'gerador de cpf, gerador cpf, cpf gerador, cpf válido, validar cpf online, gerar cpf válido' : 'cpf validator, cpf generator, valid cpf, validate cpf online, generate valid cpf'
+        // Optimized for: gerador de cpf, gerador cpf, online, gratuito
+        title: t.heroTitle, // Uses the highly optimized H1
+        description: t.heroSubtitle, // Use the keyword-rich subtitle as description
+        keywords: language === 'pt' ? 'gerador de cpf válido online, gerar cpf válido, validador cpf online, cpf gerador 2025, cpf para teste, ferramenta gratuita' : 'cpf validator, cpf generator, valid cpf online, validate cpf free, generate valid cpf'
       },
       'gerador-cpf': {
         // Optimized for: gerador cpf valido, gerador de cpf valido, cpf gerador valido, cpf valido gerador
         title: t.generatorTitle,
         description: t.generatorMetaDesc,
-        keywords: language === 'pt' ? 'gerador cpf valido, gerador de cpf valido, cpf gerador valido, cpf valido gerador, cpf para teste, cpf fictício' : 'cpf generator, generate valid cpf, test cpf, fictitious cpf'
+        keywords: language === 'pt' ? 'gerador cpf valido, gerador de cpf valido, cpf gerador valido, cpf valido gerador, cpf para teste, cpf fictício, gerador de cpf online' : 'cpf generator, generate valid cpf, test cpf, fictitious cpf, online cpf generator'
       },
       'validar-cpf': {
-        // Optimized for: validador cpf, verificar se cpf é válido
+        // Optimized for: validador cpf, verificar se cpf é válido, validar cpf online
         title: t.validatorTitle,
         description: t.validatorMetaDesc,
-        keywords: language === 'pt' ? 'validador cpf, validar cpf, verificar cpf, cpf válido, verificar se o cpf é válido' : 'cpf validator, validate cpf, verify cpf, valid cpf'
+        keywords: language === 'pt' ? 'validador cpf, validar cpf online, verificar cpf, cpf válido, verificar se o cpf é válido, ferramenta gratuita' : 'cpf validator, validate cpf online, verify cpf, valid cpf, free tool'
       },
       'lote-cpf': {
         title: t.batchToolsTitle,
         description: t.batchToolsMetaDesc,
-        keywords: language === 'pt' ? 'validação em lote, geração em lote cpf, processar cpfs, gerador cpf em massa' : 'batch validation, batch cpf generation, process cpfs'
+        keywords: language === 'pt' ? 'validação em lote, geração em lote cpf, processar cpfs, gerador cpf em massa, validador em massa' : 'batch validation, batch cpf generation, process cpfs, mass validator'
       },
       'sobre-cpf-tools': {
         title: t.aboutTitle,
         description: t.aboutMetaDesc,
-        keywords: language === 'pt' ? 'sobre validador cpf, algoritmo cpf, como funciona cpf' : 'about cpf validator, cpf algorithm, how cpf works'
+        keywords: language === 'pt' ? 'sobre validador cpf, algoritmo cpf, como funciona o cpf, como é feito o cpf' : 'about cpf validator, cpf algorithm, how cpf works'
       },
       contato: {
         title: t.contactTitle,
         description: t.contactMetaDesc,
-        keywords: language === 'pt' ? 'contato cpf tools, suporte validador cpf' : 'contact cpf tools, cpf validator support'
+        keywords: language === 'pt' ? 'contato cpf tools, suporte validador cpf, email de contato' : 'contact cpf tools, cpf validator support, contact email'
       },
       privacidade: {
         title: language === 'pt' ? 'Política de Privacidade | CPF Tools' : 'Privacy Policy | CPF Tools',
         description: language === 'pt' ? 'Política de privacidade do CPF Tools: processamento 100% local, seus dados estão seguros.' : 'CPF Tools Privacy Policy: 100% local processing, your data is secure.',
-        keywords: language === 'pt' ? 'privacidade, política, dados seguros' : 'privacy, policy, secure data'
+        keywords: language === 'pt' ? 'privacidade, política, dados seguros, processamento local' : 'privacy, policy, secure data, local processing'
       },
       termos: {
         title: language === 'pt' ? 'Termos de Uso | CPF Tools' : 'Terms of Use | CPF Tools',
         description: language === 'pt' ? 'Termos e condições para o uso correto da plataforma CPF Tools.' : 'Terms and conditions for the correct use of the CPF Tools platform.',
-        keywords: language === 'pt' ? 'termos de uso, regras, legal' : 'terms of use, rules, legal'
+        keywords: language === 'pt' ? 'termos de uso, regras, legal, condições de uso' : 'terms of use, rules, legal, usage conditions'
       },
       'aviso-legal': {
         title: language === 'pt' ? 'Aviso Legal | CPF Tools' : 'Legal Notice | CPF Tools',
         description: t.disclaimerText,
-        keywords: language === 'pt' ? 'aviso legal, disclaimer, cpf fictício' : 'legal notice, disclaimer, fictitious cpf'
+        keywords: language === 'pt' ? 'aviso legal, disclaimer, cpf fictício, uso para testes' : 'legal notice, disclaimer, fictitious cpf, use for testing'
       }
     };
     return meta[pageKey] || meta.home;
@@ -548,8 +568,48 @@ const CPFValidatorGenerator = () => {
 
   const pageMeta = getPageMeta();
   // Using currentCleanPath for canonical URL, assuming domain is geradorcpf.site (or the vercel URL for testing)
-  // Note: For production, replace geradorcpf.site with your actual domain.
   const canonicalUrl = `https://geradorcpf.site${currentCleanPath}`;
+
+  // JSON-LD Schema Markup (Technical SEO)
+  const homeSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "WebSite",
+            "@id": "https://geradorcpf.site/#website",
+            "url": "https://geradorcpf.site/",
+            "name": t.heroTitle,
+            "description": t.heroSubtitle,
+            "potentialAction": [
+                {
+                    "@type": "SearchAction",
+                    // Directing search to the validator page
+                    "target": "https://geradorcpf.site/validar-cpf?q={search_term_string}",
+                    "query-input": "required name=search_term_string"
+                }
+            ]
+        },
+        {
+            "@type": "WebPage",
+            "@id": canonicalUrl,
+            "url": canonicalUrl,
+            "name": pageMeta.title,
+            "isPartOf": { "@id": "https://geradorcpf.site/#website" },
+            "about": { "@id": "https://geradorcpf.site/#organization" },
+            "description": pageMeta.description,
+            "inLanguage": language === 'pt' ? "pt-BR" : "en",
+        },
+        {
+            "@type": "Organization",
+            "@id": "https://geradorcpf.site/#organization",
+            "name": "CPF Tools",
+            "url": "https://geradorcpf.site/",
+            // Using a simple image placeholder for the logo property. Replace with real URL.
+            "logo": "https://placehold.co/100x100/3B82F6/FFFFFF?text=CPF", 
+            "sameAs": []
+        }
+    ]
+  };
 
   // --- NAVIGATION (Refactored to use History API) ---
   const Navigation = () => {
@@ -656,11 +716,20 @@ const CPFValidatorGenerator = () => {
               {/* Optimized H1 to capture top keywords */}
               {t.heroTitle} 
             </h1>
-            <p className="text-lg sm:text-xl mb-6 sm:mb-8 text-blue-100">
-              {t.heroSubtitle}
-            </p>
+            <p 
+              className="text-lg sm:text-xl mb-6 sm:mb-8 text-blue-100"
+              // CORRECTION: Rendering Markdown from heroSubtitle as HTML
+              dangerouslySetInnerHTML={convertMarkdownToHtml(t.heroSubtitle)}
+            />
             <p className="text-base sm:text-lg mb-8 sm:mb-10 text-blue-50 leading-relaxed">
-              {t.heroDescription}
+              {/* Added internal linking via the content for SEO */}
+              {language === 'pt' ? (
+                <>
+                  Gere <a href="/gerador-cpf" onClick={(e) => { e.preventDefault(); navigate('/gerador-cpf'); }} className="font-bold underline hover:text-white transition">CPFs válidos</a> para testes de desenvolvimento, valide números existentes instantaneamente e processe milhares de documentos em segundos. Ferramenta 100% <strong>gratuita</strong>, segura e confiável.
+                </>
+              ) : (
+                t.heroDescription
+              )}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
@@ -672,11 +741,11 @@ const CPFValidatorGenerator = () => {
                 <ChevronRight size={20} />
               </a>
               <a
-                href="/sobre-cpf-tools" // Updated to clean URL
-                onClick={(e) => { e.preventDefault(); navigate('/sobre-cpf-tools'); }}
+                href="/validar-cpf" // Added direct link to Validator for prominence
+                onClick={(e) => { e.preventDefault(); navigate('/validar-cpf'); }}
                 className="px-6 sm:px-8 py-3 sm:py-4 bg-transparent border-2 border-white text-white rounded-lg font-bold text-base sm:text-lg hover:bg-white hover:text-blue-600 transition"
               >
-                {t.learnMore}
+                {t.validateCPF}
               </a>
             </div>
           </div>
@@ -788,7 +857,7 @@ const CPFValidatorGenerator = () => {
       <section className="py-12 sm:py-20 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold mb-4 sm:mb-6">
-            {language === 'pt' ? 'Pronto para começar a gerar ou validar seu CPF?' : 'Ready to start generating or validating your CPF?'}
+            {language === 'pt' ? 'Pronto para começar a gerar ou validar seu CPF Online?' : 'Ready to start generating or validating your CPF Online?'}
           </h2>
           <p className="text-lg sm:text-xl mb-8 sm:mb-10 text-blue-100">
             {language === 'pt'
@@ -830,10 +899,11 @@ const CPFValidatorGenerator = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 sm:mb-12">
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">{t.generatorTitle}</h1>
-          <p className="text-base sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            {/* Added keyword rich intro */}
-            {t.generatorIntro}
-          </p>
+          <p 
+            className="text-base sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
+            // CORRECTION: Rendering Markdown from generatorIntro as HTML
+            dangerouslySetInnerHTML={convertMarkdownToHtml(t.generatorIntro)}
+          />
         </div>
 
         <div className="max-w-3xl mx-auto mb-8 sm:mb-12">
@@ -905,6 +975,7 @@ const CPFValidatorGenerator = () => {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8 text-center">{t.whyUseGenerator}</h2>
           <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
+            {/* Updated benefits to use keyword-rich strings from translations.pt */}
             {[t.generatorBenefit1, t.generatorBenefit2, t.generatorBenefit3, t.generatorBenefit4].map((benefit, idx) => (
               <div key={idx} className="bg-white rounded-xl shadow-lg p-4 sm:p-6 border border-gray-100 flex gap-3 sm:gap-4">
                 <div className="flex-shrink-0">
@@ -912,7 +983,7 @@ const CPFValidatorGenerator = () => {
                     {idx + 1}
                   </div>
                 </div>
-                <p className="text-sm sm:text-base text-gray-700 leading-relaxed">{benefit}</p>
+                <p className="text-sm sm:text-base text-gray-700 leading-relaxed" dangerouslySetInnerHTML={convertMarkdownToHtml(benefit)} />
               </div>
             ))}
           </div>
@@ -921,15 +992,16 @@ const CPFValidatorGenerator = () => {
     </div>
   );
   
-  const ValidatorPage = () => ( /* ... existing ValidatorPage logic ... */
+  const ValidatorPage = () => ( 
     <div className="py-8 sm:py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 sm:mb-12">
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">{t.validatorTitle}</h1>
-          <p className="text-base sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            {/* Added keyword rich intro */}
-            {t.validatorIntro}
-          </p>
+          <p 
+            className="text-base sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
+            // CORRECTION: Rendering Markdown from validatorIntro as HTML
+            dangerouslySetInnerHTML={convertMarkdownToHtml(t.validatorIntro)}
+          />
         </div>
 
         <div className="max-w-3xl mx-auto mb-8 sm:mb-12">
@@ -993,6 +1065,7 @@ const CPFValidatorGenerator = () => {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8 text-center">{t.whyUseValidator}</h2>
           <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
+            {/* Updated benefits to use keyword-rich strings from translations.pt */}
             {[t.validatorBenefit1, t.validatorBenefit2, t.validatorBenefit3, t.validatorBenefit4].map((benefit, idx) => (
               <div key={idx} className="bg-white rounded-xl shadow-lg p-4 sm:p-6 border border-gray-100 flex gap-3 sm:gap-4">
                 <div className="flex-shrink-0">
@@ -1000,7 +1073,7 @@ const CPFValidatorGenerator = () => {
                     {idx + 1}
                   </div>
                 </div>
-                <p className="text-sm sm:text-base text-gray-700 leading-relaxed">{benefit}</p>
+                <p className="text-sm sm:text-base text-gray-700 leading-relaxed" dangerouslySetInnerHTML={convertMarkdownToHtml(benefit)} />
               </div>
             ))}
           </div>
@@ -1009,7 +1082,7 @@ const CPFValidatorGenerator = () => {
     </div>
   );
   
-  const BatchGeneratorContent = () => ( /* ... existing BatchGeneratorContent logic ... */
+  const BatchGeneratorContent = () => ( 
     <div className="max-w-4xl mx-auto">
       <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-6 sm:p-8 border-2 border-blue-100">
         <p className="text-sm sm:text-lg text-gray-600 mb-4 sm:mb-6 leading-relaxed">{t.batchGenIntro}</p>
@@ -1092,7 +1165,7 @@ const CPFValidatorGenerator = () => {
     </div>
   );
 
-  const BatchValidatorContent = () => ( /* ... existing BatchValidatorContent logic ... */
+  const BatchValidatorContent = () => ( 
     <div className="max-w-4xl mx-auto">
       <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-6 sm:p-8 border-2 border-blue-100">
         <p className="text-sm sm:text-lg text-gray-600 mb-4 sm:mb-6 leading-relaxed">{t.batchValIntro}</p>
@@ -1141,7 +1214,7 @@ const CPFValidatorGenerator = () => {
     </div>
   );
 
-  const BatchToolsPage = () => ( /* ... existing BatchToolsPage logic ... */
+  const BatchToolsPage = () => ( 
     <div className="py-8 sm:py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 sm:mb-12">
@@ -1188,10 +1261,11 @@ const CPFValidatorGenerator = () => {
     </div>
   );
 
-  const AboutPage = () => ( /* ... existing AboutPage logic ... */
+  const AboutPage = () => ( 
     <div className="py-8 sm:py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 sm:mb-12">
+          {/* Using Question Keywords as H1/H2 for Google Answer Box opportunities */}
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">{t.aboutTitle}</h1>
           <p className="text-base sm:text-xl text-gray-600">{t.aboutMetaDesc}</p>
         </div>
@@ -1203,7 +1277,8 @@ const CPFValidatorGenerator = () => {
           </div>
 
           <div className="bg-gradient-to-br from-blue-50 to-white rounded-xl sm:rounded-2xl shadow-lg p-6 sm:p-8 border-2 border-blue-100">
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">{t.cpfAlgorithm}</h2>
+            {/* Using question keywords for H2 for clarity and SEO */}
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">{t.cpfAlgorithm} ({language === 'pt' ? 'Como Funciona o CPF?' : 'How does the CPF work?'})</h2>
             <p className="text-sm sm:text-lg text-gray-700 leading-relaxed mb-4 sm:mb-6">{t.algorithmText}</p>
             <div className="space-y-4">
               {[t.algorithm1, t.algorithm2, t.algorithm3, t.algorithm4].map((step, idx) => (
@@ -1229,7 +1304,7 @@ const CPFValidatorGenerator = () => {
     </div>
   );
 
-  const ContactPage = () => ( /* ... existing ContactPage logic ... */
+  const ContactPage = () => ( 
     <div className="py-8 sm:py-12">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 sm:mb-12">
@@ -1478,6 +1553,7 @@ const CPFValidatorGenerator = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 font-inter">
       {/* Dynamic <head> content for SEO. Using a React.Fragment to avoid invalid DOM nesting errors. */}
       <React.Fragment>
+        {/* On-Page SEO: Title, Meta Description, Keywords */}
         <title>{pageMeta.title}</title>
         <meta name="description" content={pageMeta.description} />
         <meta name="keywords" content={pageMeta.keywords} />
@@ -1486,13 +1562,18 @@ const CPFValidatorGenerator = () => {
         <meta property="og:title" content={pageMeta.title} />
         <meta property="og:description" content={pageMeta.description} />
         <meta property="og:type" content="website" />
-        {/* Canonical URL updated to use the full path, essential for SEO with clean routing */}
+        {/* Technical SEO: Canonical URL is essential for SPAs with clean routing */}
         <link rel="canonical" href={canonicalUrl} />
-        {/* Corrected hreflang to hrefLang (camelCase for JSX) */}
+        {/* Technical SEO: Hreflang Tags for multilingual setup */}
         <link rel="alternate" hrefLang="pt-BR" href="https://geradorcpf.site/" />
-        <link rel="alternate" hrefLang="en" href="https://geradorcpf.site/en" /> 
+        <link rel="alternate" hrefLang="en" href="https://geradorcpf.site/" /> 
         <link rel="alternate" hrefLang="x-default" href="https://geradorcpf.site/" />
         
+        {/* Technical SEO: JSON-LD Schema Markup (Only render on the root page) */}
+        {currentCleanPath === '/' && (
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homeSchema) }} />
+        )}
+
         {/* Google Analytics Placeholder */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
         <script dangerouslySetInnerHTML={{
