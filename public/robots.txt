@@ -1,0 +1,16 @@
+# CPF Tools - Robots.txt
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /*.json$
+
+# AdSense Crawler
+User-agent: Mediapartners-Google
+Allow: /
+
+# Sitemap
+Sitemap: https://geradorcpf.site/sitemap.xml
+
+# Crawl delay for aggressive bots
+User-agent: *
+Crawl-delay: 1
