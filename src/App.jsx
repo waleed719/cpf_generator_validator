@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { SpeedInsights } from "@vercel/speed-insights/react"
+import { SpeedInsights } from "@vercel/speed-insights/react";
+import { Analytics } from "@vercel/analytics/react";
 import { Copy, Check, Download, RefreshCw, Shield, Zap, Globe, Home, Calculator, FileCheck, Users, BookOpen, Mail, Menu, X, ChevronRight, Star, TrendingUp, Award, Clock } from 'lucide-react';
 
 
