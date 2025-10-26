@@ -476,46 +476,55 @@ const CPFValidatorGenerator = () => {
 
     const meta = {
       home: {
-        title: t.heroTitle,
+        // FIX: Append brand name to reinforce the desired title in Google SERPs.
+        title: t.heroTitle + ' | CPF Tools',
         description: t.heroSubtitle,
         keywords: language === 'pt' ? 'gerador de cpf válido online, gerar cpf válido, validador cpf online, cpf gerador 2025, cpf para teste, ferramenta gratuita' : 'cpf validator, cpf generator, valid cpf online, validate cpf free, generate valid cpf'
       },
       'gerador-cpf': {
-        title: t.generatorTitle,
+        // FIX: Append brand name
+        title: t.generatorTitle + ' | CPF Tools',
         description: t.generatorMetaDesc,
         keywords: language === 'pt' ? 'gerador cpf valido, gerador de cpf valido, cpf gerador valido, cpf valido gerador, cpf para teste, cpf fictício, gerador de cpf online' : 'cpf generator, generate valid cpf, test cpf, fictitious cpf, online cpf generator'
       },
       'validar-cpf': {
-        title: t.validatorTitle,
+        // FIX: Append brand name
+        title: t.validatorTitle + ' | CPF Tools',
         description: t.validatorMetaDesc,
         keywords: language === 'pt' ? 'validador cpf, validar cpf online, verificar cpf, cpf válido, verificar se o cpf é válido, ferramenta gratuita' : 'cpf validator, validate cpf online, verify cpf, valid cpf, free tool'
       },
       'lote-cpf': {
-        title: t.batchToolsTitle,
+        // FIX: Append brand name
+        title: t.batchToolsTitle + ' | CPF Tools',
         description: t.batchToolsMetaDesc,
         keywords: language === 'pt' ? 'validação em lote, geração em lote cpf, processar cpfs, gerador cpf em massa, validador em massa' : 'batch validation, batch cpf generation, process cpfs, mass validator'
       },
       'sobre-cpf-tools': {
-        title: t.aboutTitle,
+        // FIX: Append brand name
+        title: t.aboutTitle + ' | CPF Tools',
         description: t.aboutMetaDesc,
         keywords: language === 'pt' ? 'sobre validador cpf, algoritmo cpf, como funciona o cpf, como é feito o cpf' : 'about cpf validator, cpf algorithm, how cpf works'
       },
       contato: {
-        title: t.contactTitle,
+        // FIX: Append brand name
+        title: t.contactTitle + ' | CPF Tools',
         description: t.contactMetaDesc,
         keywords: language === 'pt' ? 'contato cpf tools, suporte validador cpf, email de contato' : 'contact cpf tools, cpf validator support, contact email'
       },
       privacidade: {
+        // Already good
         title: language === 'pt' ? 'Política de Privacidade | CPF Tools' : 'Privacy Policy | CPF Tools',
         description: language === 'pt' ? 'Política de privacidade do CPF Tools: processamento 100% local, seus dados estão seguros.' : 'CPF Tools Privacy Policy: 100% local processing, your data is secure.',
         keywords: language === 'pt' ? 'privacidade, política, dados seguros, processamento local' : 'privacy, policy, secure data, local processing'
       },
       termos: {
+        // Already good
         title: language === 'pt' ? 'Termos de Uso | CPF Tools' : 'Terms of Use | CPF Tools',
         description: language === 'pt' ? 'Termos e condições para o uso correto da plataforma CPF Tools.' : 'Terms and conditions for the correct use of the CPF Tools platform.',
         keywords: language === 'pt' ? 'termos de uso, regras, legal, condições de uso' : 'terms of use, rules, legal, usage conditions'
       },
       'aviso-legal': {
+        // Already good
         title: language === 'pt' ? 'Aviso Legal | CPF Tools' : 'Legal Notice | CPF Tools',
         description: t.disclaimerText,
         keywords: language === 'pt' ? 'aviso legal, disclaimer, cpf fictício, uso para testes' : 'legal notice, disclaimer, fictitious cpf, use for testing'
