@@ -532,19 +532,6 @@ const CPFValidatorGenerator = () => {
     const baseSchema = {
       "@context": "https://schema.org",
       "@graph": [
-        // {
-        //   "@type": "WebSite",
-        //   "@id": "https://geradorcpf.site/#website",
-        //   "url": "https://geradorcpf.site/",
-        //   "name": t.heroTitle,
-        //   "description": t.heroSubtitle,
-        //   "inLanguage": language === 'pt' ? "pt-BR" : "en",
-        //   "potentialAction": {
-        //     "@type": "SearchAction",
-        //     "target": "https://geradorcpf.site/validar-cpf?q={search_term_string}",
-        //     "query-input": "required name=search_term_string"
-        //   }
-        // },
         {
           "@type": "WebSite",
           "@id": "https://geradorcpf.site/#website",
