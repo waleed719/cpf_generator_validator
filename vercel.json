@@ -12,8 +12,7 @@
         }
       ],
       "destination": "https://geradorcpf.site/:path*",
-      "permanent": true,
-      "statusCode": 301
+      "permanent": true
     }
   ],
   "rewrites": [
