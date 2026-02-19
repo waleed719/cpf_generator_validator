@@ -2,29 +2,26 @@
   "buildCommand": "npm run build",
   "outputDirectory": "build",
   "framework": "create-react-app",
-  
   "redirects": [
     {
-      "source": "/www.geradorcpf.site/:path*",
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.geradorcpf.site"
+        }
+      ],
       "destination": "https://geradorcpf.site/:path*",
-      "permanent": true,
-      "statusCode": 301
-    },
-    {
-      "source": "/index.html",
-      "destination": "/",
       "permanent": true,
       "statusCode": 301
     }
   ],
-  
   "rewrites": [
     {
       "source": "/(.*)",
       "destination": "/index.html"
     }
   ],
-  
   "headers": [
     {
       "source": "/(.*)",

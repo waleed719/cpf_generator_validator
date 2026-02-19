@@ -5,37 +5,34 @@
   <!-- Home Page - Highest Priority -->
   <url>
     <loc>https://geradorcpf.site/</loc>
-    <lastmod>2025-10-23</lastmod>
+    <lastmod>2026-02-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://geradorcpf.site/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://geradorcpf.site/en" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://geradorcpf.site/?lang=en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://geradorcpf.site/" />
   </url>
   
-  <!-- Gerador de CPF Válido Page (New Keyword-Rich Path) -->
+  <!-- Gerador de CPF Válido Page -->
   <url>
     <loc>https://geradorcpf.site/gerador-cpf</loc>
-    <lastmod>2025-10-23</lastmod>
+    <lastmod>2026-02-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://geradorcpf.site/gerador-cpf" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://geradorcpf.site/en/cpf-generator" />
   </url>
   
-  <!-- Validar CPF Page (New Keyword-Rich Path) -->
+  <!-- Validar CPF Page -->
   <url>
     <loc>https://geradorcpf.site/validar-cpf</loc>
-    <lastmod>2025-10-23</lastmod>
+    <lastmod>2026-02-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://geradorcpf.site/validar-cpf" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://geradorcpf.site/en/validate-cpf" />
   </url>
   
-  <!-- Lote CPF Page (New Keyword-Rich Path) -->
+  <!-- Lote CPF Page -->
   <url>
     <loc>https://geradorcpf.site/lote-cpf</loc>
-    <lastmod>2025-10-23</lastmod>
+    <lastmod>2026-02-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -43,7 +40,7 @@
   <!-- About CPF Tools Page -->
   <url>
     <loc>https://geradorcpf.site/sobre-cpf-tools</loc>
-    <lastmod>2025-10-23</lastmod>
+    <lastmod>2026-02-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -51,7 +48,7 @@
   <!-- Contact Page -->
   <url>
     <loc>https://geradorcpf.site/contato</loc>
-    <lastmod>2025-10-23</lastmod>
+    <lastmod>2026-02-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -59,19 +56,19 @@
   <!-- Policy and Legal Pages -->
   <url>
     <loc>https://geradorcpf.site/politica-privacidade</loc>
-    <lastmod>2025-10-23</lastmod>
+    <lastmod>2026-02-19</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://geradorcpf.site/termos-de-uso</loc>
-    <lastmod>2025-10-23</lastmod>
+    <lastmod>2026-02-19</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://geradorcpf.site/aviso-legal</loc>
-    <lastmod>2025-10-23</lastmod>
+    <lastmod>2026-02-19</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
